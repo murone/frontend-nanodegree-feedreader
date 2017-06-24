@@ -6,7 +6,7 @@ In this project you are given a web-based application that reads RSS feeds. The 
 ## How to Run?
 
 1. Clone repo locally
-2. Open '''index.html''' in a browser
+2. Open ```index.html``` in a browser
 
 ## Why this Project?
 
