@@ -98,7 +98,7 @@ $(function() {
 		 * the use of Jasmine's beforeEach and asynchronous done() function.
 		 */
 		beforeEach(function(done){
-			loadFeed(0, function(){done()});
+			loadFeed(0, function(){done();});
 		});
 
 		it('has at least one entry', function(done){
@@ -119,7 +119,7 @@ $(function() {
 
 		beforeEach(function(done){
 			old = $('.feed').html();
-			loadFeed(2, function(){done()});
+			loadFeed(2, function(){done();});
 		});
 
 		it('changes content when a new feed is loaded', function(done){
