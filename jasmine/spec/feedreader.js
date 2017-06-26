@@ -35,6 +35,7 @@ $(function() {
 			allFeeds.forEach(function(feed){
 				expect(feed.url).toBeDefined();
 				expect(feed.url).not.toBe(null);
+				expect(feed.url).not.toBe('');
 			});
 		});
 
@@ -47,6 +48,7 @@ $(function() {
 			allFeeds.forEach(function(feed){
 				expect(feed.name).toBeDefined();
 				expect(feed.name).not.toBe(null);
+				expect(feed.name).not.toBe('');
 			});
 		});
 	});
@@ -71,20 +73,11 @@ $(function() {
 		  */
 		it('changes visibility when the menu icon is clicked', function(){
 
-			//Check it, click it, and check it again!
-			var before = $('body').hasClass('menu-hidden');
+			//Click, test, click, test
 			$('.menu-icon-link').click();
-			var after = $('body').hasClass('menu-hidden');
-
-			//Reset it because we clean up after ourselves in this house
+			expect($('body').hasClass('menu-hidden')).toBe(false);
 			$('.menu-icon-link').click();
-			//One more check of the value
-			var wayafter = $('body').hasClass('menu-hidden');
-
-			//Check our results
-			expect(before).not.toBe(after);
-			expect(after).not.toBe(wayafter);
-			expect(before).toBe(wayafter);
+			expect($('body').hasClass('menu-hidden')).toBe(true);
 		});
 	});
 
@@ -102,7 +95,7 @@ $(function() {
 		});
 
 		it('has at least one entry', function(done){
-			expect($('.feed').html()).not.toBe("");
+			expect($('.feed .entry').length).toBeGreaterThan (0);
 			done();
 		});
 
@@ -115,16 +108,23 @@ $(function() {
 		 * by the loadFeed function that the content actually changes.
 		 * Remember, loadFeed() is asynchronous.
 		 */
-		var old;
+		var first, second;
 
-		beforeEach(function(done){
-			old = $('.feed').html();
-			loadFeed(2, function(){done();});
+		beforeAll(function(done){
+			loadFeed(0, function(){
+				first = $('.feed').html();
+				console.log(first);
+				loadFeed(2, function(){
+					second = $('.feed').html();
+					console.log(second);
+					done();
+				});
+				done();
+			});
 		});
 
-		it('changes content when a new feed is loaded', function(done){
-			expect($('.feed').html()).not.toBe(old);
-			done();
+		it('changes content when a new feed is loaded', function(){
+			expect(second).not.toBe(first);
 		});
 	});
 }());
